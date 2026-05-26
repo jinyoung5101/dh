@@ -34,6 +34,15 @@ focus_min = st.sidebar.slider("집중 시간 (분)", 1, 60, 25)
 break_min = st.sidebar.slider("휴식 시간 (분)", 1, 30, 5)
 
 # =========================
+# 총 시간 계산
+# =========================
+total_time = (
+    focus_min * 60
+    if st.session_state.mode == "집중"
+    else break_min * 60
+)
+
+# =========================
 # 타이머 표시
 # =========================
 minutes = st.session_state.time_left // 60
@@ -56,14 +65,13 @@ st.markdown(
 
 st.subheader(f"현재 모드: {st.session_state.mode}")
 
-progress = 1 - (
-    st.session_state.time_left /
-    (
-        focus_min * 60
-        if st.session_state.mode == "집중"
-        else break_min * 60
-    )
-)
+# =========================
+# 진행률 계산
+# =========================
+progress = 1 - (st.session_state.time_left / total_time)
+
+# progress 범위 강제 제한
+progress = max(0.0, min(progress, 1.0))
 
 st.progress(progress)
 
@@ -93,7 +101,12 @@ with col3:
 if st.session_state.running:
 
     time.sleep(1)
-    st.session_state.time_left -= 1
+
+    # 음수 방지
+    st.session_state.time_left = max(
+        0,
+        st.session_state.time_left - 1
+    )
 
     # 시간 종료
     if st.session_state.time_left <= 0:
@@ -102,6 +115,7 @@ if st.session_state.running:
             st.session_state.mode = "휴식"
             st.session_state.time_left = break_min * 60
             st.toast("🎉 집중 완료! 휴식 시작!")
+
         else:
             st.session_state.mode = "집중"
             st.session_state.time_left = focus_min * 60
