@@ -8,7 +8,7 @@ st.set_page_config(
     page_icon="💌",
 )
 
-st.title("💌 연애상담 챗봇")
+st.title("💌 미친 챗봇")
 st.caption("Gemini 2.5 Flash Lite 기반 상담 챗봇")
 
 # API 키 불러오기
