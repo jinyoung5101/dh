@@ -13,7 +13,7 @@ st.caption("Gemini 2.5 Flash Lite 기반 상담 챗봇")
 
 # API 키 불러오기
 try:
-    api_key = st.secrets["AQ.Ab8RN6KxO6SXfIV6lm_oCRn7fajupGi5Pw9L101QHu5OZCzLMg"]
+    api_key = st.secrets["GEMINI_API_KEY"]
 except Exception:
     st.error("Secrets에 GEMINI_API_KEY를 등록해주세요.")
     st.stop()
