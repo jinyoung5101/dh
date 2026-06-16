@@ -42,7 +42,7 @@ if st.button("결과 보기"):
 
         st.divider()
 
-        if total >= 42:
+        if total >= 32:
             personality = "다정한 연애가"
             strength = [
                 "공감 능력이 뛰어남",
@@ -55,7 +55,7 @@ if st.button("결과 보기"):
                 "과도한 희생 줄이기"
             ]
 
-        elif total >= 32:
+        elif total >= 22:
             personality = "균형형 연애가"
             strength = [
                 "감정 조절이 좋음",
