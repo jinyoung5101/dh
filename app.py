@@ -12,54 +12,6 @@ st.set_page_config(
 )
 
 # =========================
-# 스타일
-# =========================
-st.markdown("""
-<style>
-
-.stApp {
-    background: linear-gradient(
-        135deg,
-        #ff4d6d,
-        #ff85a1,
-        #ff4d6d
-    );
-}
-
-h1 {
-    color: white !important;
-}
-
-[data-testid="stSidebar"] {
-    background-color: #ff4d6d;
-}
-
-.stButton > button {
-    width: 100%;
-    background-color: #ff3366;
-    color: white;
-    border: none;
-    border-radius: 12px;
-}
-
-.stButton > button:hover {
-    background-color: #ff6699;
-    color: white;
-}
-
-.tip-box {
-    background: rgba(255,255,255,0.9);
-    padding: 15px;
-    border-radius: 15px;
-    color: #d81b60;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-# =========================
 # 제목
 # =========================
 st.title("❤️ Love Coach AI")
@@ -122,20 +74,21 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # =========================
-# 안내 문구
+# 첫 실행 안내
 # =========================
 if len(st.session_state.messages) == 0:
-    st.markdown("""
-    <div class="tip-box">
-    💕 안녕하세요! 연애 고민이 있다면 편하게 이야기해주세요.
-    <br><br>
-    예시:
-    <br>• 썸녀가 답장이 느려졌어요
-    <br>• 고백해도 될까요?
-    <br>• 헤어진 전애인이 자꾸 생각나요
-    <br>• 장거리 연애가 힘들어요
-    </div>
-    """, unsafe_allow_html=True)
+    st.info(
+        """
+💕 안녕하세요! 연애 고민이 있다면 편하게 이야기해주세요.
+
+예시 질문
+• 썸남이 연락이 줄었어요
+• 고백해도 될까요?
+• 헤어진 전애인이 생각나요
+• 장거리 연애가 힘들어요
+• 연애를 시작하는 게 무서워요
+"""
+    )
 
 # =========================
 # 이전 대화 출력
@@ -154,16 +107,17 @@ user_input = st.chat_input(
 if user_input:
 
     # 사용자 메시지 저장
-    st.session_state.messages.append({
-        "role": "user",
-        "content": user_input
-    })
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "content": user_input
+        }
+    )
 
     # 사용자 메시지 출력
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # AI 응답
     with st.chat_message("assistant"):
 
         placeholder = st.empty()
@@ -187,7 +141,7 @@ if user_input:
             prompt = f"""
 {SYSTEM_PROMPT}
 
-지금까지의 대화:
+다음은 지금까지의 대화 내용이다.
 
 {history_text}
 
@@ -207,10 +161,12 @@ if user_input:
 
             placeholder.markdown(ai_response)
 
-            st.session_state.messages.append({
-                "role": "assistant",
-                "content": ai_response
-            })
+            st.session_state.messages.append(
+                {
+                    "role": "assistant",
+                    "content": ai_response
+                }
+            )
 
         except Exception as e:
 
@@ -220,10 +176,12 @@ if user_input:
 
             placeholder.error(error_message)
 
-            st.session_state.messages.append({
-                "role": "assistant",
-                "content": error_message
-            })
+            st.session_state.messages.append(
+                {
+                    "role": "assistant",
+                    "content": error_message
+                }
+            )
 
 # =========================
 # 사이드바
